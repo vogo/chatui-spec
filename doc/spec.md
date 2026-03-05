@@ -21,11 +21,7 @@ The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "S
 ```json
 {
   "version": "1.0",
-  "status": "active",
   "body": { /* Component */ },
-  "persistBody": true,
-  "completedBody": { /* Component */ },
-  "cancelledBody": { /* Component */ },
   "data": {}
 }
 ```
@@ -33,11 +29,7 @@ The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "S
 | Field | Type | Required | Description |
 |-------|------|----------|-------------|
 | version | string | REQUIRED | Specification version (e.g., `"1.0"`). Renderers SHOULD accept documents whose major version matches the renderer's supported version. A renderer supporting version `1.x` MUST accept any `1.y` document where `y <= x` |
-| status | string | REQUIRED | UI status: `active`, `completed`, or `cancelled`|
-| body | Component | REQUIRED | Root component of the UI tree, displayed when status is `active` |
-| persistBody | boolean | OPTIONAL | When `true`, the `body` remains visible regardless of status. When `false`, the `body` is hidden when status is not `active`. Default is `true` |
-| completedBody | Component | OPTIONAL | Component tree appended below `body` when status is `completed`. |
-| cancelledBody | Component | OPTIONAL | Component tree appended below `body` when status is `cancelled`. |
+| body | Component | REQUIRED | Root component of the UI tree |
 | data | object | OPTIONAL | Initial data for form fields and table rows |
 
 ### Component
@@ -72,7 +64,6 @@ Renderers MUST follow these rules to ensure forward compatibility:
 
 1. **Unknown component types**: Renderers MUST ignore components with unrecognized `type` values and MUST NOT treat them as errors. If the unrecognized component has `children`, the renderer MAY render the children as if the parent were a `view` component.
 2. **Unknown properties**: Renderers MUST ignore unrecognized fields in `props`, the Component object, and the Chat UI Object without raising errors.
-3. **Unknown status values**: Renderers SHOULD treat unrecognized `status` values as `active`.
 
 ## Components
 
@@ -614,7 +605,6 @@ Complete example of a login form:
 ```json
 {
   "version": "1.0",
-  "status": "active",
   "data": {
     "form": {
       "username": "",
